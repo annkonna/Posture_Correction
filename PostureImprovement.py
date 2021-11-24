@@ -4,7 +4,7 @@ import threading
 from plyer import notification
 
 
-def notif():
+def notify_person():
     notification.notify(
         # title of the notification,
         title="Posture Monitor",
@@ -20,9 +20,15 @@ def notif():
 
 cascPath = "haarcascade_frontalface_default.xml"
 faceCascade = cv2.CascadeClassifier(cascPath)
-start_time = threading.Timer(600, notif)
+notif_time = threading.Timer(600, notify_person)
 video_capture = cv2.VideoCapture(0)
+coord1_x = 0
+coord1_y = 0
+coord2_x = 0
+coord2_y = 0
+timer_on = False
 flag = 0
+areaFlag = False
 count = 0
 
 while True:
@@ -41,21 +47,40 @@ while True:
     # Draw a rectangle around the faces
     if len(faces) != 0:
         for (x, y, w, h) in faces:
+            rect_frame = cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 255, 0), 2)
             count += 1
             print(count)
             if flag == 0:
                 flag = 1
-            rect_frame = cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 255, 0), 2)
-            coord1_x = x
-            coord1_y = y
-            coord2_x = x + w
-            coord2_y = y + h
-            print(coord1_x, coord1_y, coord2_x, coord2_y)
+            else:
+                pass
+            if count >= 11:
+                if not timer_on:
+                    notif_time.start()
+                    timer_on = True
+                if coord1_x != 0 and w * h > 20000 and areaFlag != False:
+                    if abs(x - coord1_x) >= 20:
+                        print(abs(x - coord1_x))
+                        print(x)
+                        print(coord1_x)
+                        print("True")
+                        notif_time.cancel()
+                        notif_time.start()
+                if w * h > 20000:
+                    areaFlag = True
+                    coord1_x = x
+                    coord1_y = y
+                    coord2_x = x + w
+                    coord2_y = y + h
+                    print(coord1_x, coord1_y, coord2_x, coord2_y)
+                    print(w * h)
+                else:
+                    areaFlag = False
             time.sleep(0.1)
             # compare(rect_frame, prev_frame)
 
     # Display the resulting frame
-    cv2.imshow('Video', frame)
+    cv2.imshow('Volunteer Picture Frame', frame)
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
