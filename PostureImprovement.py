@@ -1,6 +1,7 @@
 import cv2
 import time
 from plyer import notification
+import threading
 
 
 def notify_person():
@@ -15,25 +16,13 @@ def notify_person():
         # the notification stays for 50sec
         timeout=50
     )
-
-
-def notification_timer(on_off):
-    start_time = time.time()
-    seconds = 100
-    while True:
-        current_time = time.time()
-        elapsed_time = current_time - start_time
-        if not on_off:
-            if elapsed_time > seconds:
-                notify_person()
-                break
-        else:
-            notification_timer(False)
+    notify_thread.run()
 
 
 cascPath = "haarcascade_frontalface_default.xml"
 faceCascade = cv2.CascadeClassifier(cascPath)
-init_thread_creation = False
+notify_thread = threading.Timer(30, notify_person)
+notify_thread_on_off = False
 video_capture = cv2.VideoCapture(0)
 coord1_x = 0
 coord1_y = 0
@@ -63,21 +52,17 @@ while True:
         for (x, y, w, h) in faces:
             rect_frame = cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 255, 0), 2)
             count += 1
-            if flag == 0:
-                flag = 1
-            else:
-                pass
             if count >= 21:
-                if not init_thread_creation:
-                    notification_timer(False)
-                    init_thread_creation = True
+                if not notify_thread_on_off:
+                    notify_thread.start()
+                    notify_thread_on_off = True
                 if count != 0 and areaFrame > 10000 and areaFlag and w * h > 10000:
+                    # checking if the face has gone out of frame
                     if abs(x - coord1_x) >= 20:
-                        if not init_thread_creation:
-                            notification_timer(False)
-                            init_thread_creation = True
-                        else:
-                            notification_timer(True)
+                        if notify_thread.is_alive():
+                            notify_thread.cancel()
+                            notify_thread_on_off = False
+                            notify_thread = threading.Timer(30, notify_person)
                 if w * h > 10000:
                     areaFlag = True
                     areaFrame = w * h
@@ -88,7 +73,6 @@ while True:
                 else:
                     areaFlag = False
             time.sleep(0.1)
-            # compare(rect_frame, prev_frame)
 
     # Display the resulting frame
     cv2.imshow('Volunteer Picture Frame', frame)

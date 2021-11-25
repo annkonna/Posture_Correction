@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2a1c88b0-738b-43ad-82d7-eadccc45df3e" name="Default Changelist" comment="Fixed the threading issues">
+    <list default="true" id="2a1c88b0-738b-43ad-82d7-eadccc45df3e" name="Default Changelist" comment="Removed the necessary print statements">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PostureImprovement.py" beforeDir="false" afterPath="$PROJECT_DIR$/PostureImprovement.py" afterDir="false" />
     </list>
@@ -176,7 +176,14 @@
       <option name="project" value="LOCAL" />
       <updated>1637844528154</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Removed the necessary print statements">
+      <created>1637864319417</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1637864319417</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -194,6 +201,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Added additional logic to compare the students face frame." />
     <MESSAGE value="Fixed the threading issues" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed the threading issues" />
+    <MESSAGE value="Removed the necessary print statements" />
+    <option name="LAST_COMMIT_MESSAGE" value="Removed the necessary print statements" />
   </component>
 </project>
