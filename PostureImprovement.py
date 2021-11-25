@@ -1,6 +1,5 @@
 import cv2
 import time
-import threading
 from plyer import notification
 
 
@@ -18,20 +17,18 @@ def notify_person():
     )
 
 
-def notif_thread():
-    new_notif_time = threading.Timer(600, notify_person)
-    return new_notif_time
-
-
-# def thread_creation(thread_creation_flag):
-#     if not thread_creation_flag:
-#         notification = notif_thread()
-#         notification.start()
-#         thread_creation_flag = True
-#     else:
-#         notification.cancel()
-#         notification = notif_thread()
-#         notification.start()
+def notification_timer(on_off):
+    start_time = time.time()
+    seconds = 100
+    while True:
+        current_time = time.time()
+        elapsed_time = current_time - start_time
+        if not on_off:
+            if elapsed_time > seconds:
+                notify_person()
+                break
+        else:
+            notification_timer(False)
 
 
 cascPath = "haarcascade_frontalface_default.xml"
@@ -43,7 +40,6 @@ coord1_y = 0
 coord2_x = 0
 coord2_y = 0
 posture_counter = 0
-timer_on = False
 flag = 0
 areaFlag = False
 areaFrame = 0
@@ -67,36 +63,21 @@ while True:
         for (x, y, w, h) in faces:
             rect_frame = cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 255, 0), 2)
             count += 1
-            print(count)
             if flag == 0:
                 flag = 1
             else:
                 pass
             if count >= 21:
-                if not timer_on:
-                    if not init_thread_creation:
-                        notification = notif_thread()
-                        notification.start()
-                        init_thread_creation = True
-                    else:
-                        notification.cancel()
-                        notification = notif_thread()
-                        notification.start()
-                    timer_on = True
-                if coord1_x != 0 and areaFrame > 10000 and areaFlag != False:
+                if not init_thread_creation:
+                    notification_timer(False)
+                    init_thread_creation = True
+                if count != 0 and areaFrame > 10000 and areaFlag and w * h > 10000:
                     if abs(x - coord1_x) >= 20:
                         if not init_thread_creation:
-                            notification = notif_thread()
-                            notification.start()
+                            notification_timer(False)
                             init_thread_creation = True
                         else:
-                            notification.cancel()
-                            notification = notif_thread()
-                            notification.start()
-                        print(abs(x - coord1_x))
-                        print(x)
-                        print(coord1_x)
-                        print("True")
+                            notification_timer(True)
                 if w * h > 10000:
                     areaFlag = True
                     areaFrame = w * h
@@ -104,8 +85,6 @@ while True:
                     coord1_y = y
                     coord2_x = x + w
                     coord2_y = y + h
-                    print(coord1_x, coord1_y, coord2_x, coord2_y)
-                    print(w * h)
                 else:
                     areaFlag = False
             time.sleep(0.1)
