@@ -18,17 +18,35 @@ def notify_person():
     )
 
 
+def notif_thread():
+    new_notif_time = threading.Timer(600, notify_person)
+    return new_notif_time
+
+
+# def thread_creation(thread_creation_flag):
+#     if not thread_creation_flag:
+#         notification = notif_thread()
+#         notification.start()
+#         thread_creation_flag = True
+#     else:
+#         notification.cancel()
+#         notification = notif_thread()
+#         notification.start()
+
+
 cascPath = "haarcascade_frontalface_default.xml"
 faceCascade = cv2.CascadeClassifier(cascPath)
-notif_time = threading.Timer(600, notify_person)
+init_thread_creation = False
 video_capture = cv2.VideoCapture(0)
 coord1_x = 0
 coord1_y = 0
 coord2_x = 0
 coord2_y = 0
+posture_counter = 0
 timer_on = False
 flag = 0
 areaFlag = False
+areaFrame = 0
 count = 0
 
 while True:
@@ -54,20 +72,34 @@ while True:
                 flag = 1
             else:
                 pass
-            if count >= 11:
+            if count >= 21:
                 if not timer_on:
-                    notif_time.start()
+                    if not init_thread_creation:
+                        notification = notif_thread()
+                        notification.start()
+                        init_thread_creation = True
+                    else:
+                        notification.cancel()
+                        notification = notif_thread()
+                        notification.start()
                     timer_on = True
-                if coord1_x != 0 and w * h > 20000 and areaFlag != False:
+                if coord1_x != 0 and areaFrame > 10000 and areaFlag != False:
                     if abs(x - coord1_x) >= 20:
+                        if not init_thread_creation:
+                            notification = notif_thread()
+                            notification.start()
+                            init_thread_creation = True
+                        else:
+                            notification.cancel()
+                            notification = notif_thread()
+                            notification.start()
                         print(abs(x - coord1_x))
                         print(x)
                         print(coord1_x)
                         print("True")
-                        notif_time.cancel()
-                        notif_time.start()
-                if w * h > 20000:
+                if w * h > 10000:
                     areaFlag = True
+                    areaFrame = w * h
                     coord1_x = x
                     coord1_y = y
                     coord2_x = x + w
