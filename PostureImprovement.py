@@ -21,7 +21,7 @@ def notify_person():
 
 cascPath = "haarcascade_frontalface_default.xml"
 faceCascade = cv2.CascadeClassifier(cascPath)
-notify_thread = threading.Timer(30, notify_person)
+notify_thread = threading.Timer(600, notify_person)
 notify_thread_on_off = False
 video_capture = cv2.VideoCapture(0)
 coord1_x = 0
@@ -29,7 +29,6 @@ coord1_y = 0
 coord2_x = 0
 coord2_y = 0
 posture_counter = 0
-flag = 0
 areaFlag = False
 areaFrame = 0
 count = 0
@@ -52,7 +51,8 @@ while True:
         for (x, y, w, h) in faces:
             rect_frame = cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 255, 0), 2)
             count += 1
-            if count >= 21:
+            # giving the person time to settle
+            if count >= 45:
                 if not notify_thread_on_off:
                     notify_thread.start()
                     notify_thread_on_off = True
@@ -62,7 +62,8 @@ while True:
                         if notify_thread.is_alive():
                             notify_thread.cancel()
                             notify_thread_on_off = False
-                            notify_thread = threading.Timer(30, notify_person)
+                            notify_thread = threading.Timer(600, notify_person)
+                # verifying the face frame detection is accurate
                 if w * h > 10000:
                     areaFlag = True
                     areaFrame = w * h
