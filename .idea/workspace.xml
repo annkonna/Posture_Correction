@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2a1c88b0-738b-43ad-82d7-eadccc45df3e" name="Default Changelist" comment="Corrected the notification thread(s)">
+    <list default="true" id="2a1c88b0-738b-43ad-82d7-eadccc45df3e" name="Default Changelist" comment="Added comment to explain parts of the code and adjusted the notification timing frequency.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PostureImprovement.py" beforeDir="false" afterPath="$PROJECT_DIR$/PostureImprovement.py" afterDir="false" />
     </list>
@@ -190,7 +190,14 @@
       <option name="project" value="LOCAL" />
       <updated>1637873850617</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Added comment to explain parts of the code and adjusted the notification timing frequency.">
+      <created>1637945679245</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1637945679245</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -210,6 +217,7 @@
     <MESSAGE value="Fixed the threading issues" />
     <MESSAGE value="Removed the necessary print statements" />
     <MESSAGE value="Corrected the notification thread(s)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Corrected the notification thread(s)" />
+    <MESSAGE value="Added comment to explain parts of the code and adjusted the notification timing frequency." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added comment to explain parts of the code and adjusted the notification timing frequency." />
   </component>
 </project>

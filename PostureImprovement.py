@@ -23,11 +23,10 @@ cascPath = "haarcascade_frontalface_default.xml"
 faceCascade = cv2.CascadeClassifier(cascPath)
 notify_thread = threading.Timer(600, notify_person)
 notify_thread_on_off = False
+posture_change = False
 video_capture = cv2.VideoCapture(0)
+counter_30sec = 0
 coord1_x = 0
-coord1_y = 0
-coord2_x = 0
-coord2_y = 0
 posture_counter = 0
 areaFlag = False
 areaFrame = 0
@@ -58,19 +57,29 @@ while True:
                     notify_thread_on_off = True
                 if count != 0 and areaFrame > 10000 and areaFlag and w * h > 10000:
                     # checking if the face has gone out of frame
-                    if abs(x - coord1_x) >= 20:
-                        if notify_thread.is_alive():
-                            notify_thread.cancel()
-                            notify_thread_on_off = False
-                            notify_thread = threading.Timer(600, notify_person)
+                    if abs(x - coord1_x) > 20 or posture_change:
+                        if not posture_change:
+                            posture_change = True
+                            counter_30sec += 1
+                        else:
+                            if abs(x - coord1_x) <= 20:
+                                if counter_30sec == 30000:
+                                    if notify_thread.is_alive():
+                                        notify_thread.cancel()
+                                        notify_thread_on_off = False
+                                        notify_thread = threading.Timer(600, notify_person)
+                                    counter_30sec = 0
+                                    posture_change = False
+                                else:
+                                    counter_30sec += 1
+                            else:
+                                counter_30sec = 0
+                                posture_change = False
                 # verifying the face frame detection is accurate
                 if w * h > 10000:
                     areaFlag = True
                     areaFrame = w * h
                     coord1_x = x
-                    coord1_y = y
-                    coord2_x = x + w
-                    coord2_y = y + h
                 else:
                     areaFlag = False
             time.sleep(0.1)
