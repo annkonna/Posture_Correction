@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2a1c88b0-738b-43ad-82d7-eadccc45df3e" name="Default Changelist" comment="Updated logic if the person has changed his/her position">
+    <list default="true" id="2a1c88b0-738b-43ad-82d7-eadccc45df3e" name="Default Changelist" comment="Added some comments to explain the code.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PostureImprovement.py" beforeDir="false" afterPath="$PROJECT_DIR$/PostureImprovement.py" afterDir="false" />
     </list>
@@ -204,7 +204,14 @@
       <option name="project" value="LOCAL" />
       <updated>1637990571327</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Added some comments to explain the code.">
+      <created>1638498256085</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1638498256085</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -226,6 +233,7 @@
     <MESSAGE value="Corrected the notification thread(s)" />
     <MESSAGE value="Added comment to explain parts of the code and adjusted the notification timing frequency." />
     <MESSAGE value="Updated logic if the person has changed his/her position" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated logic if the person has changed his/her position" />
+    <MESSAGE value="Added some comments to explain the code." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added some comments to explain the code." />
   </component>
 </project>
